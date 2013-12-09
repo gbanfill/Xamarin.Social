@@ -23,7 +23,8 @@ namespace Xamarin.Social
 {
 	class ToolbarView : TableLayout
 	{
-		static Color ToolbarColor = Color.Argb (0xFF, 0xDD, 0xDD, 0xDD);
+		static Color FacebookToolbarColour = Color.Argb(0xFF, 59, 89, 192);
+        static Color TwitterToolbarColour = Color.Argb(0xFF,192, 192, 192);
 
 		ProgressBar progress;
 		Button sendButton;
@@ -53,15 +54,15 @@ namespace Xamarin.Social
 		{
 			var tlabel = new TextView (context) {
 				Text = title,
-				TextSize = 24,
+				TextSize = 16,
 				LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
 					Column = 0,
 					TopMargin = 4,
 					BottomMargin = 0,
-					LeftMargin = 8,
+					LeftMargin = 15,
 				},
 			};
-			tlabel.SetTextColor (Color.Black);
+			tlabel.SetTextColor (Color.White);
 
 			progress = new ProgressBar (context) {
 				Indeterminate = true,
@@ -75,12 +76,13 @@ namespace Xamarin.Social
 
 			sendButton = new Button (context) {
 				Text = "Send",
-				TextSize = 20,
-				Enabled = true,
+                
+				TextSize = 16,
+                Enabled = true,
 				LayoutParameters = new TableRow.LayoutParams (TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent) {
 					TopMargin = 2,
 					BottomMargin = 2,
-					RightMargin = 2,
+					RightMargin = 10,
 					Column = 3,
 				},
 			};
@@ -90,6 +92,8 @@ namespace Xamarin.Social
 					ev (this, EventArgs.Empty);
 				}
 			};
+            sendButton.SetBackgroundColor(FacebookToolbarColour);
+            sendButton.SetTextColor(Color.White);
 
 			var toolbarRow = new TableRow (context) {
 			};
@@ -99,8 +103,21 @@ namespace Xamarin.Social
 
 			LayoutParameters = new LinearLayout.LayoutParams (LinearLayout.LayoutParams.FillParent, LinearLayout.LayoutParams.WrapContent) {
 			};
-			SetBackgroundColor (ToolbarColor);
-			SetColumnStretchable (1, true);
+
+            if (title != "Tweet")
+            {
+                SetBackgroundColor(FacebookToolbarColour);
+            }
+            else
+            {
+                SetBackgroundColor(TwitterToolbarColour);
+                sendButton.SetTextColor(Color.Blue);
+                sendButton.SetText("TWEET", TextView.BufferType.Normal);
+                sendButton.SetTextSize(Android.Util.ComplexUnitType.Dip, 9);
+                sendButton.SetBackgroundColor(TwitterToolbarColour);
+            } 
+            
+            SetColumnStretchable(1, true);
 			SetColumnShrinkable (1, true);
 
 			AddView (toolbarRow);

@@ -36,7 +36,8 @@ namespace Xamarin.Social
 	[Activity (Label = "Share")]
 	public class ShareActivity : Activity
 	{
-		static Color AttachmentColor = Color.Argb (0xFF, 0xEE, 0xEE, 0xEE);
+        static Color FacebookToolbarColour = Color.Argb(0xFF, 59, 89, 192);
+        static Color TwitterToolbarColour = Color.Argb(0xFF,192, 192, 192);
 
 		LinearLayout layout;
 		TextView acctPicker;
@@ -87,8 +88,8 @@ namespace Xamarin.Social
 			}
 		}
 
-		const int LabelTextSize = 24;
-		const int ComposeTextSize = 24;
+		const int LabelTextSize = 14;
+		const int ComposeTextSize = 14;
 
 		void BuildUI (Bundle savedInstanceState)
 		{
@@ -137,14 +138,14 @@ namespace Xamarin.Social
 					RightMargin = 12,
 				},
 			};
-			acctLabel.SetTextColor (Color.DarkGray);
+			acctLabel.SetTextColor (Color.LightGray);
 			acctLabel.SetTextSize (ComplexUnitType.Sp, LabelTextSize);
 
 			acctPicker = new TextView (this) {
 				Typeface = Typeface.DefaultFromStyle (TypefaceStyle.Bold),
 				Clickable = true,
 			};
-			acctPicker.SetTextColor (Color.Black);
+            acctPicker.SetTextColor(Color.Black);
 			acctPicker.SetTextSize (ComplexUnitType.Sp, LabelTextSize);
 			acctPicker.Click += PickAccount;
 			UpdateAccountUI ();
@@ -386,8 +387,9 @@ namespace Xamarin.Social
 			{
 				var row = new TableRow (context) {
 				};
-				row.SetBackgroundColor (AttachmentColor);
-				AddView (row);
+
+				row.SetBackgroundColor(Color.LightGray);
+				AddView(row);
 
 				var tlabel = new TextView (context) {
 					Text = title,

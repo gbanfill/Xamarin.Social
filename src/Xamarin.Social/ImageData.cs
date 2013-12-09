@@ -24,6 +24,7 @@ using Android.Graphics;
 #else
 using System.Drawing;
 using System.Drawing.Imaging;
+using Android.Graphics;
 #endif
 
 namespace Xamarin.Social

@@ -22,6 +22,7 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using Xamarin.Auth;
+using content = Android.Content;
 
 #if PLATFORM_IOS
 using ShareUIType = MonoTouch.UIKit.UIViewController;
@@ -213,7 +214,7 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Saves an account and associates it with this service.
 		/// </summary>
-		public virtual void SaveAccount (Android.Content.Context context, Account account)
+        public virtual void SaveAccount(content.Context context, Account account)
 		{
 			AccountStore.Create (context).Save (account, ServiceId);
 		}
@@ -221,7 +222,7 @@ namespace Xamarin.Social
 		/// <summary>
 		/// Deletes a previously saved account associated with this service.
 		/// </summary>
-		public virtual void DeleteAccount (Android.Content.Context context, Account account)
+        public virtual void DeleteAccount(content.Context context, Account account)
 		{
 			AccountStore.Create (context).Delete (account, ServiceId);
 		}
@@ -327,7 +328,7 @@ namespace Xamarin.Social
 		/// </param>
 		public virtual ShareUIType GetShareUI (UIContext activity, Item item, Action<ShareResult> completionHandler)
 		{
-			var intent = new Android.Content.Intent (activity, typeof (ShareActivity));
+            var intent = new content.Intent(activity, typeof(ShareActivity));
 			var state = new ShareActivity.State {
 				Service = this,
 				Item = item,

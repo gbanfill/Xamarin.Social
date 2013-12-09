@@ -35,7 +35,7 @@ namespace Xamarin.Social.Services
 			MaxLinks = 1;
 
 			AuthorizeUrl = new Uri ("https://m.facebook.com/dialog/oauth/");
-			RedirectUrl = new Uri ("http://www.facebook.com/connect/login_success.html");
+            RedirectUrl = new Uri("http://www.historylens.co.uk/FacebookLoginSuccess.html");
 
 			Scope = "publish_stream";
 		}
