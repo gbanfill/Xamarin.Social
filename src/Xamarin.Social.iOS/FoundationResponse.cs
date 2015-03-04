@@ -17,64 +17,75 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using MonoTouch.Foundation;
 using Xamarin.Auth;
+using Foundation;
 
 namespace Xamarin.Social
 {
-	class FoundationResponse : Response
-	{
-		NSData data;
-		Dictionary<string, string> headers;
-		int statusCode;
+    class FoundationResponse : Response
+    {
+        NSData data;
+        Dictionary<string, string> headers;
+        int statusCode;
 
-		public override HttpStatusCode StatusCode {
-			get {
-				return (HttpStatusCode)statusCode;
-			}
-		}
+        public override HttpStatusCode StatusCode
+        {
+            get
+            {
+                return (HttpStatusCode)statusCode;
+            }
+        }
 
-		public override System.Collections.Generic.IDictionary<string, string> Headers {
-			get {
-				return headers;
-			}
-		}
+        public override System.Collections.Generic.IDictionary<string, string> Headers
+        {
+            get
+            {
+                return headers;
+            }
+        }
 
-		public FoundationResponse (NSData responseData, NSHttpUrlResponse urlResponse)
-		{
-			data = responseData;
-			statusCode = urlResponse.StatusCode;
+        public FoundationResponse(NSData responseData, NSHttpUrlResponse urlResponse)
+        {
+            data = responseData;
+            statusCode = (int)urlResponse.StatusCode;
 
-			headers = new Dictionary<string, string> ();
-			var hs = urlResponse.AllHeaderFields;
-			foreach (var k in hs.Keys) {
-				headers[k.ToString ()] = hs.ObjectForKey (k).ToString ();
-			}
-		}
+            headers = new Dictionary<string, string>();
+            var hs = urlResponse.AllHeaderFields;
+            foreach (var k in hs.Keys)
+            {
+                headers[k.ToString()] = hs.ObjectForKey(k).ToString();
+            }
+        }
 
-		public override Stream GetResponseStream ()
-		{
-			var mutableData = data as NSMutableData;
-			if (mutableData != null) {
-				unsafe {
-					return new UnmanagedMemoryStream ((byte*)mutableData.Bytes, mutableData.Length);
-				}
-			} else {
-				return data.AsStream ();
-			}
-		}
+        public override Stream GetResponseStream()
+        {
+            var mutableData = data as NSMutableData;
+            if (mutableData != null)
+            {
+                unsafe
+                {
+                    return new UnmanagedMemoryStream((byte*)mutableData.Bytes, (long)mutableData.Length);
+                }
+            }
+            else
+            {
+                return data.AsStream();
+            }
+        }
 
-		protected override void Dispose (bool disposing)
-		{
-			if (disposing) {
-				if (data != null) {
-					data.Dispose ();
-					data = null;
-				}
-			}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (data != null)
+                {
+                    data.Dispose();
+                    data = null;
+                }
+            }
 
-			base.Dispose (disposing);
-		}
-	}
+            base.Dispose(disposing);
+        }
+    }
 }
 
